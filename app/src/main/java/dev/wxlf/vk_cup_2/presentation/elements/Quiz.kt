@@ -25,11 +25,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Quiz(questions: List<QuizModel>) {
+fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
     val pagerState = rememberPagerState()
     val pagerScope = rememberCoroutineScope()
 
-    HorizontalPager(pageCount = questions.size, state = pagerState, userScrollEnabled = false) {
+    HorizontalPager(modifier = modifier, pageCount = questions.size, state = pagerState, userScrollEnabled = false) {
         val quiz = questions[it]
         var answered by remember { mutableStateOf(false) }
         var userAnswer by remember { mutableStateOf(-1) }

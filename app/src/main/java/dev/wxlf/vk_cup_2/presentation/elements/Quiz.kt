@@ -62,15 +62,17 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                         Text(answerModel.answer)
                     }
 
-                } else if (answered && userAnswer != quiz.rightAnswer) {
+                } else if (userAnswer != quiz.rightAnswer) {
                     Box(
                         modifier = Modifier
                             .padding(vertical = 8.dp)
                             .fillMaxWidth()
                             .background(
-                                if (index == quiz.rightAnswer) Color(0xFF4CC76A)
-                                else if (index == userAnswer) Color(0xFFB94B4B)
-                                else Color(0xFF607E80),
+                                when (index) {
+                                    quiz.rightAnswer -> Color(0xFF4CC76A)
+                                    userAnswer -> Color(0xFFB94B4B)
+                                    else -> Color(0xFF607E80)
+                                },
                                 RoundedCornerShape(5.dp)
                             )
                             .padding(horizontal = 16.dp, vertical = 16.dp)

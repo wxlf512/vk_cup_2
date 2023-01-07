@@ -15,10 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import dev.wxlf.vk_cup_2.R
-import dev.wxlf.vk_cup_2.presentation.elements.AnswerModel
-import dev.wxlf.vk_cup_2.presentation.elements.Quiz
-import dev.wxlf.vk_cup_2.presentation.elements.QuizModel
-import dev.wxlf.vk_cup_2.presentation.elements.RatingBar
+import dev.wxlf.vk_cup_2.presentation.elements.*
 import dev.wxlf.vk_cup_2.presentation.theme.Vk_cup_2Theme
 
 @AndroidEntryPoint
@@ -32,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column() {
+                    Column {
                         Quiz(
                             questions = listOf(
                                 QuizModel(
@@ -87,6 +84,7 @@ class MainActivity : ComponentActivity() {
                             starTint = Color(0xFFF97224),
                             modifier = Modifier.padding(start = 42.dp, top = 16.dp)
                         )
+                        MatchThePairs(modifier = Modifier.padding(32.dp), pairs = mapOf("один" to "1", "два" to "2", "три" to "3", "четыре" to "4"))
                     }
                 }
             }

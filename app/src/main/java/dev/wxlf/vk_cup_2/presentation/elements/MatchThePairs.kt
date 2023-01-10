@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -17,7 +18,7 @@ import kotlin.random.Random
 fun MatchThePairs(modifier: Modifier = Modifier, pairs: Map<String, String>) {
     val left by remember { mutableStateOf(pairs.keys) }
     val right by remember { mutableStateOf(pairs.values) }
-    val defaultColor = Color(0xFF568B42)
+    val defaultColor = MaterialTheme.colorScheme.primary
     val colorsLeft = remember { mutableStateListOf<Color>() }
     val colorsRight = remember { mutableStateListOf<Color>() }
     val choosed = remember { mutableStateListOf<Int>() }

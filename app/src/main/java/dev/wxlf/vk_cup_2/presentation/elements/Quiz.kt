@@ -43,7 +43,6 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 42.dp)
         ) {
             Text("Вопрос ${it + 1}/${questions.size}")
             Text(
@@ -106,7 +105,8 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                                 )
                             Text(
                                 "${answerModel.percentages}%",
-                                modifier = Modifier.padding(start = 8.dp)
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = MaterialTheme.colorScheme.onTertiary
                             )
 
                         }
@@ -137,7 +137,8 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                                 )
                             Text(
                                 "${answerModel.percentages}%",
-                                modifier = Modifier.padding(start = 8.dp)
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = MaterialTheme.colorScheme.onTertiary
                             )
 
                         }

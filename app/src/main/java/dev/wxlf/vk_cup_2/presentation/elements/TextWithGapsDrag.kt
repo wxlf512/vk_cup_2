@@ -170,7 +170,7 @@ fun TextWithGapsDrag(
                 allWordsCopy.forEach { (word, active) ->
                     DragTarget(dataToDrop = word, enabled = active) {
                         OutlinedButton(onClick = {}, enabled = active) {
-                            Text(word)
+                            Text(word, fontSize = textSize)
                         }
                     }
                 }

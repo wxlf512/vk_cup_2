@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,7 +30,12 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
     val pagerState = rememberPagerState()
     val pagerScope = rememberCoroutineScope()
 
-    HorizontalPager(modifier = modifier, pageCount = questions.size, state = pagerState, userScrollEnabled = false) {
+    HorizontalPager(
+        modifier = modifier,
+        pageCount = questions.size,
+        state = pagerState,
+        userScrollEnabled = false
+    ) {
         val quiz = questions[it]
         var answered by remember { mutableStateOf(false) }
         var userAnswer by remember { mutableStateOf(-1) }
@@ -52,14 +58,17 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                         modifier = Modifier
                             .padding(vertical = 8.dp)
                             .fillMaxWidth()
-                            .background(Color(0xFF607E80), RoundedCornerShape(5.dp))
+                            .background(
+                                MaterialTheme.colorScheme.tertiary,
+                                RoundedCornerShape(5.dp)
+                            )
                             .clickable {
                                 answered = true
                                 userAnswer = index
                             }
-                            .padding(horizontal = 32.dp, vertical = 16.dp)
+                            .padding(horizontal = 16.dp, vertical = 16.dp)
                     ) {
-                        Text(answerModel.answer)
+                        Text(answerModel.answer, color = MaterialTheme.colorScheme.onTertiary)
                     }
 
                 } else if (userAnswer != quiz.rightAnswer) {
@@ -71,13 +80,17 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                                 when (index) {
                                     quiz.rightAnswer -> Color(0xFF4CC76A)
                                     userAnswer -> Color(0xFFB94B4B)
-                                    else -> Color(0xFF607E80)
+                                    else -> MaterialTheme.colorScheme.tertiary
                                 },
                                 RoundedCornerShape(5.dp)
                             )
                             .padding(horizontal = 16.dp, vertical = 16.dp)
                     ) {
-                        Text(answerModel.answer, modifier = Modifier.align(Alignment.CenterStart))
+                        Text(
+                            answerModel.answer,
+                            modifier = Modifier.align(Alignment.CenterStart),
+                            color = MaterialTheme.colorScheme.onTertiary
+                        )
                         Row(modifier = Modifier.align(Alignment.CenterEnd)) {
                             if (index == quiz.rightAnswer)
                                 Icon(

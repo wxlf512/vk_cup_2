@@ -145,19 +145,4 @@ fun TextWithGaps(
                 }
         }
     }
-//    if (firstInput) {
-//    val text = remember { mutableStateOf("TEST") }
-//    TextField(
-//        modifier = modifier.width(150.dp),
-//        value = text.value,
-//        onValueChange = {
-//            text.value = it
-//        },
-//        singleLine = true,
-//        colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
-//        keyboardActions = KeyboardActions(onAny = {
-//            focusManager.clearFocus()
-//        })
-////        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp),
-//    )
 }

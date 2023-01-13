@@ -39,7 +39,7 @@ fun MatchThePairs(modifier: Modifier = Modifier, pairs: Map<String, String>) {
                 OutlinedButton(
                     onClick = {
                         if (!choosing || choosingNum == index) {
-                            if (colorsLeft[index] == Color(0xFF568B42)) {
+                            if (colorsLeft[index] == defaultColor) {
                                 colorsLeft[index] = Color(
                                     Random.nextInt(0, 255),
                                     Random.nextInt(0, 255),

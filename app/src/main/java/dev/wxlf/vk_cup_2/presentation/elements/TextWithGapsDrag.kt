@@ -2,10 +2,7 @@ package dev.wxlf.vk_cup_2.presentation.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -47,12 +44,13 @@ fun TextWithGapsDrag(
                 if (firstInput) {
                     val word = remember { mutableStateOf("") }
                     DropTarget<String> { isInBound, data ->
-                        val bgColor = if (word.value == correctWords[0] && !isInBound) {
+                        var bgColor = if (word.value == correctWords[0] && !isInBound) {
                             Color(0xFF4CC76A)
                         } else if (word.value != correctWords[0] && word.value.isNotEmpty()) {
                             Color(0xFFB94B4B)
-                        } else if (isInBound) MaterialTheme.colorScheme.secondary
-                        else MaterialTheme.colorScheme.tertiary
+                        } else MaterialTheme.colorScheme.tertiary
+
+                        bgColor = if (isInBound) MaterialTheme.colorScheme.secondary else bgColor
 
                         data?.let {
                             if (isInBound) {
@@ -88,12 +86,13 @@ fun TextWithGapsDrag(
                         if (index + 1 in 0..correctWords.lastIndex) {
                             val word = remember { mutableStateOf("") }
                             DropTarget<String> { isInBound, data ->
-                                val bgColor = if (word.value == correctWords[index + 1] && !isInBound) {
+                                var bgColor = if (word.value == correctWords[index + 1] && !isInBound) {
                                     Color(0xFF4CC76A)
                                 } else if (word.value != correctWords[index + 1] && word.value.isNotEmpty()) {
                                     Color(0xFFB94B4B)
-                                } else if (isInBound) MaterialTheme.colorScheme.secondary
-                                else MaterialTheme.colorScheme.tertiary
+                                } else MaterialTheme.colorScheme.tertiary
+
+                                bgColor = if (isInBound) MaterialTheme.colorScheme.secondary else bgColor
 
                                 data?.let {
                                     if (isInBound) {
@@ -125,12 +124,13 @@ fun TextWithGapsDrag(
                         if (index in 0..correctWords.lastIndex) {
                             val word = remember { mutableStateOf("") }
                             DropTarget<String> { isInBound, data ->
-                                val bgColor = if (word.value == correctWords[index] && !isInBound) {
+                                var bgColor = if (word.value == correctWords[index] && !isInBound) {
                                     Color(0xFF4CC76A)
                                 } else if (word.value != correctWords[index] && word.value.isNotEmpty()) {
                                     Color(0xFFB94B4B)
-                                } else if (isInBound) MaterialTheme.colorScheme.secondary
-                                else MaterialTheme.colorScheme.tertiary
+                                } else MaterialTheme.colorScheme.tertiary
+
+                                bgColor = if (isInBound) MaterialTheme.colorScheme.secondary else bgColor
 
                                 data?.let {
                                     if (isInBound) {
@@ -165,17 +165,11 @@ fun TextWithGapsDrag(
                 crossAxisAlignment = FlowCrossAxisAlignment.Center,
                 mainAxisSpacing = 8.dp,
                 crossAxisSpacing = 2.dp,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.padding(top = 16.dp).fillMaxWidth()
             ) {
                 allWordsCopy.forEach { (word, active) ->
-                    if (active) {
-                        DragTarget(dataToDrop = word) {
-                            OutlinedButton(onClick = {}) {
-                                Text(word)
-                            }
-                        }
-                    } else {
-                        OutlinedButton(onClick = {}, enabled = false) {
+                    DragTarget(dataToDrop = word, enabled = active) {
+                        OutlinedButton(onClick = {}, enabled = active) {
                             Text(word)
                         }
                     }

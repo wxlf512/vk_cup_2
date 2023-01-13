@@ -1,6 +1,5 @@
 package dev.wxlf.vk_cup_2.presentation.elements.draganddrop
 
-import android.util.Log
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -39,7 +38,7 @@ fun Draggable(
                         scaleY = 1f
                         alpha = if (targetSize == IntSize.Zero) 0f else .95f
                         translationX = offset.x - (targetSize.width / 2)
-                        translationY = state.dragOffset.y
+                        translationY = state.dragOffset.y + (targetSize.height * 2f)
                     }
                     .onGloballyPositioned {
                         targetSize = it.size
@@ -56,36 +55,41 @@ fun Draggable(
 fun <T> DragTarget(
     modifier: Modifier = Modifier,
     dataToDrop: T,
+    enabled: Boolean = true,
     content: @Composable (() -> Unit)
 ) {
 
     var currentPosition by remember { mutableStateOf(Offset.Zero) }
     val currentState = LocalDragTargetInfo.current
 
-    Box(modifier = modifier
-        .onGloballyPositioned {
-            currentPosition = it.localToWindow(Offset.Zero)
+    if (enabled)
+        Box(modifier = modifier
+            .onGloballyPositioned {
+                currentPosition = it.localToWindow(Offset.Zero)
+            }
+            .pointerInput(Unit) {
+                detectDragGestures(onDragStart = {
+                    currentState.dataToDrop = dataToDrop
+                    currentState.isDragging = true
+                    currentState.dragPosition = currentPosition + it
+                    currentState.draggableComposable = content
+                }, onDrag = { change, dragAmount ->
+                    change.consume()
+                    currentState.dragOffset += Offset(dragAmount.x, dragAmount.y)
+                }, onDragEnd = {
+                    currentState.isDragging = false
+                    currentState.dragOffset = Offset.Zero
+                }, onDragCancel = {
+                    currentState.dragOffset = Offset.Zero
+                    currentState.isDragging = false
+                })
+            }) {
+            content()
         }
-        .pointerInput(Unit) {
-            detectDragGestures(onDragStart = {
-                currentState.dataToDrop = dataToDrop
-                Log.e("AAAA", dataToDrop.toString())
-                currentState.isDragging = true
-                currentState.dragPosition = currentPosition + it
-                currentState.draggableComposable = content
-            }, onDrag = { change, dragAmount ->
-                change.consume()
-                currentState.dragOffset += Offset(dragAmount.x, dragAmount.y)
-            }, onDragEnd = {
-                currentState.isDragging = false
-                currentState.dragOffset = Offset.Zero
-            }, onDragCancel = {
-                currentState.dragOffset = Offset.Zero
-                currentState.isDragging = false
-            })
-        }) {
-        content()
-    }
+    else
+        Box(modifier = modifier) {
+            content()
+        }
 }
 
 @Suppress("UNCHECKED_CAST")

@@ -118,12 +118,16 @@ fun Quiz(modifier: Modifier = Modifier, questions: List<QuizModel>) {
                             .fillMaxWidth()
                             .background(
                                 if (index == quiz.rightAnswer) Color(0xFF4CC76A)
-                                else Color(0xFF607E80),
+                                else MaterialTheme.colorScheme.tertiary,
                                 RoundedCornerShape(5.dp)
                             )
                             .padding(horizontal = 16.dp, vertical = 16.dp)
                     ) {
-                        Text(answerModel.answer, modifier = Modifier.align(Alignment.CenterStart))
+                        Text(
+                            answerModel.answer,
+                            modifier = Modifier.align(Alignment.CenterStart),
+                            color = MaterialTheme.colorScheme.onTertiary
+                        )
                         Row(modifier = Modifier.align(Alignment.CenterEnd)) {
                             if (index == quiz.rightAnswer)
                                 Icon(
